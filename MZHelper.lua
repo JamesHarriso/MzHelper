@@ -1,4 +1,4 @@
--- re re
+
 script_name("MZHelper")
 script_authors("Dmitry Tsoy and James Harrison")
 script_description("Script for the Ministries of Health Rodina Western District")
@@ -1973,7 +1973,7 @@ function imgui.OnDrawFrame()
 				
 
 			end
-			--//////Discord
+			--//////Дискорд
 			if select_menu[9] then
 			imgui.SameLine()
 			imgui.BeginChild("discord", imgui.ImVec2(0, 0), false)
@@ -1986,7 +1986,7 @@ function imgui.OnDrawFrame()
 				imgui.TextColoredRGB("Небольшой гайд по пользованию голосовой программы {3EB2FF}Discrod")
 				imgui.Dummy(imgui.ImVec2(0, 20))
 				imgui.SetCursorPosX(10)
-				imgui.TextColoredRGB("{3EB2FF}Discord{FFFFFF} - это очень удобная программа, предназначенная для передачи, как голосовых, так и\n текстовых сообщений другим пользователям. В наше время, данная программа является самой \nпродвинутой и популярной с другими схожими ей приложениями.")
+				imgui.TextColoredRGB("{3EB2FF}Discord{FFFFFF} - это программа, предназначенная для передачи, как голосовых, так и\n текстовых сообщений другим пользователям. В наше время, данная программа является самой \nпродвинутой и популярной с другими схожими ей приложениями.")
 				imgui.Dummy(imgui.ImVec2(0, 10))
 				imgui.Bullet()
 				imgui.TextColoredRGB("{FAB428}Первое.\n\t{FFFFFF}Вам нужно будет зарегистрироваться и для удобства скачать программу на компьютер.")
@@ -1996,9 +1996,9 @@ function imgui.OnDrawFrame()
 					imgui.SetTooltip(u8"Кликните, чтобы открыть ссылку.")
 				end
 				if imgui.IsItemClicked(0) then
-					print(shell32.ShellExecuteA(nil, 'open', 'https://discordapp.com/', nil, nil, 1))
+					print(shell32.ShellExecuteA(nil, 'open', 'https://discord.com/download', nil, nil, 1))
 				end
-				imgui.TextWrapped(u8"Нажмите 'Загрузить для Window', если хотите использовать программу на компьютере, или 'Открыть в браузере', если хотите пользоваться Дискордом прямо в браузере, но учтите, что в браузере Вы не сможете говорить по активации на клавишу.")
+				imgui.TextWrapped(u8"Нажмите 'Download for Windows', если хотите использовать программу на компьютере, или 'Открыть в браузере', если хотите пользоваться Дискордом прямо в браузере, но учтите, что в браузере Вы не сможете говорить по активации на клавишу.")
 				if disSite then
 					imgui.SetCursorPosX(100)
 					imgui.Image(disSite, imgui.ImVec2(462, 212))
@@ -2011,13 +2011,13 @@ function imgui.OnDrawFrame()
 					imgui.SetTooltip(u8"Кликните, чтобы открыть ссылку.")
 				end
 				if imgui.IsItemClicked(0) then
-					print(shell32.ShellExecuteA(nil, 'open', 'http://forum.arizona-rp.com/index.php?threads/saint-rose-Наша-группа-vk-Вконтакте-и-discord.373395/', nil, nil, 1))
+					print(shell32.ShellExecuteA(nil, 'open', 'https://discord.gg/rodina05', nil, nil, 1))
 				end
 				imgui.TextColoredRGB("Для этого перейдите по выше приведённой ссылке, где Вы сможете открыть ссылку на канал \nсервера. После перехода Вас перебросит на программу, если Вы её скачивали, где добавится \nсоотвествующий канал. Так как Вы являетесь новечком на канале, придётся подождать 10 минут \n{FAA158}перед тем, как сможете что либо писать.")   
 				imgui.Bullet()
 				imgui.TextColoredRGB("{FAB428}Третье.\n\t{FFFFFF}По истечению 10 минут Вы сможете писать в доступные каналы. Так как Вы являетесь \nсотрудником Больницы, необходимо запросить роль для доступа к голосовому каналу. \nДля этого требуется:")
 
-				imgui.TextColoredRGB("\t1. Нажмите на текстовый канал, указанный левой красной стрелкой. \n\t2. Узнайте, если ли сейчас в игре сотрудник от 9 ранга и выше. Посмотреть можно, введя \n\t\tкоманду /mb \n\t3. Если в игре есть сотрудник(и) от 9 ранга, то нужно в дискорде прописать команду.\n\t\t{F24545}Для Больницы ЛС - /lsmc123 \n\t\t{F24545}Для Больницы СФ - /sfmc123\n\t\t{F24545}Для Больницы ЛВ - /lvmc123\n{FFFFFF}После ввода команды должно получиться так(Показано правой стрелкой):")
+				imgui.TextColoredRGB("\t1. Нажмите на текстовый канал, указанный левой красной стрелкой. \n\t2. Пропишите команду !role. {FFFFFF}После ввода команды должно получиться так (Показано правой стрелкой):")
 				if disRole then
 					imgui.SetCursorPosX(25)
 					imgui.Image(disRole, imgui.ImVec2(586, 340))
