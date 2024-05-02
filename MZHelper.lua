@@ -1,11 +1,12 @@
 
+
 script_name("MZHelper")
 script_authors("Dmitry Tsoy and James Harrison")
 script_description("Script for the Ministries of Health Rodina Western District")
 script_version("1.0")
 script_properties("work-in-pause")
 setver = 1
- 
+--dasdasd 
 require "lib.sampfuncs"
 require "lib.moonloader"
 local mem = require "memory"
