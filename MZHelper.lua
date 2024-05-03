@@ -211,13 +211,13 @@ local num_rank	= imgui.ImInt(0)
 local chgName = {}
 chgName.inp = imgui.ImBuffer(100)
 chgName.org = {u8"МЗ-А", u8"МЗ-Э"}
-chgName.rank = {u8"Санитар ", u8"Фельдшер", u8"Врач-практикант", u8"", u8"Врач-специалист", u8"Терапевт", u8"Нарколог", u8"Хирург", u8"Заведующий отделением", u8"Зам. Главного врача", u8"Главный врач"}
+chgName.rank = {u8"Санитар ", u8"Фельдшер", u8"Врач-практикант", u8"Врач-специалист", u8"Терапевт", u8"Нарколог", u8"Хирург", u8"Заведующий отделением", u8"Зам. Главного врача", u8"Главный врач"}
 
 local list_org_BL = {"МЗ-А", "МЗ-Э"} 
 local list_org	= {u8"МЗ-А", u8"МЗ-Э"}
 local list_org_en = {"Los-Santos Medical Center","San-Fierro Medical Center","Las-Venturas Medical Center"}
 local list_sex	= {fa.ICON_MALE .. u8" Мужской", fa.ICON_FEMALE .. u8" Женский"} --ICON_MALE ICON_FEMALE 
-local list_rank	= {u8"Санитар ", u8"Фельдшер", u8"Врач-практикант", u8"", u8"Врач-специалист", u8"Терапевт", u8"Нарколог", u8"Хирург", u8"Заведующий отделением", u8"Зам. Главного врача", u8"Главный врач"}
+local list_rank	= {u8"Санитар ", u8"Фельдшер", u8"Врач-практикант", u8"Врач-специалист", u8"Терапевт", u8"Нарколог", u8"Хирург", u8"Заведующий отделением", u8"Зам. Главного врача", u8"Главный врач"}
 --chat
 local cb_chat1	= imgui.ImBool(false)
 local cb_chat2	= imgui.ImBool(false)
