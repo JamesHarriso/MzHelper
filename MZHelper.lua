@@ -2010,7 +2010,7 @@ function imgui.OnDrawFrame()
 			imgui.BeginChild("discord", imgui.ImVec2(0, 0), false)
 				if logoDis then
 					imgui.SetCursorPosX(140)
-					imgui.Image(logoDis, imgui.ImVec2(388, 125))
+					imgui.Image(logoDis, imgui.ImVec2(384, 216))
 				end
 				imgui.Dummy(imgui.ImVec2(0, 5))
 				imgui.SetCursorPosX(145)
