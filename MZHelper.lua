@@ -13,7 +13,8 @@ local encoding = require "encoding"
 encoding.default = "CP1251"
 local u8 = encoding.UTF8
 local dlstatus = require("moonloader").download_status
- 
+local audio = loadAudioStream('moonloader/MZHelper/music/up.mp3')
+
 local sampfuncsNot = [[
  Не обнаружен файл SAMPFUNCS.asi в папке игры, вследствие чего
 скрипту не удалось запуститься.
@@ -892,85 +893,108 @@ function main()
 			print("{82E28C}Чтение отыгровки мед.карты...")
 		else 
 			local textrp = [[
-// Цены на выдачу новой мед.карты
-#med7=10.000$
-#med14=20.000$
-#med30=32.500$
-#med60=65.000$
-// Цены на обновление мед.карты
-#medup7=15.000$
-#medup14=25.000$
-#medup30=38.000$
-#medup60=70.000$
+// Игроки ДО 3 уровня:
+#med7=5.000
+#med14=10.000
+#med30=20.000
+#med60=30.000
+// Игроки 3 и более уровня:
+#medup7=20.000
+#medup14=30.000
+#medup30=40.000
+#medup60=50.000
 
 {sleep:0}
-Здравствуйте, Вы хотите получить медицинскую карту впервые или обновить существующую?
+Здравствуйте, Вы хотите получить медицинскую карту?
+{sleep:3000}
 Предоставьте, пожалуйста, Ваш паспорт
+{sleep:3000}
 /b /showpass {myID}
 {pause}
 /todo Благодорю вас!*взяв паспорт в руки и {sex:начал|начала} его изучать.
 {dialog}
 [name]=Выдача мед.карты
-[1]=Новая мед.карта
-Хорошо, я Вас {sex:понял|поняла}. Вам нужно оформить новую мед.карту.
+[1]=Игроки ДО 3 уровня:
+Хорошо, я Вас {sex:понял|поняла}.
+{sleep:3000}
 Для оформления карты необходимо заплатить гос.пошлину, которая зависит от срока карты.
-На 7 дней - #med7, на 14 дней - #med14
-На 30 дней #med30, на 60 дней - #med60.
-Вы согласны?
-Если согласны, то оплатите и мы продолжим процесс оформления.
-/b Оплатить можно через /pay {myID} или /trade {myID}
+{sleep:3000}
+На 7 дней #med7 | на 14 дней #med14
+На 30 дней #med30 | на 60 дней #med60
+{sleep:3000}
+На сколько дней?
+{sleep:3000}
+
 
 {dialog}
 [name]=Срок выдачи
 [1]=7 дней
-#timeID=0
+#timeID=0 5000
 [2]=14 дней
-#timeID=1
+#timeID=1 10000
 [3]=30 дней
-#timeID=2
+#timeID=2 20000
 [4]=60 дей
-#timeID=3
+#timeID=3 30000
 {dialogEnd}
 
 Хорошо, тогда приступим к оформлению.
 /me {sex:вытащил|вытащила} из нагрудного кармана шариковую ручку
+{sleep:3000}
 /do Ручка в правой руке.
+{sleep:3000}
 /me открыл{sex:|а} шкафчик, затем достал{sex:|а} оттуда пустые бланки для мед.карты
+{sleep:3000}
 /me разложил{sex:|а} пальцами правой руки паспорт на нужной страничке и начал{sex:|а} переписывать данные в бланк
+{sleep:3000}
 /me открыл{sex:|а} пустую мед.карту и паспорт, затем начал{sex:|а} переписывать данные из паспорта
+{sleep:3000}
 /do Спустя минуту данные паспорта были переписаны на бланк.
+{sleep:3000}
 
-[2]=Обновление данных
-Хорошо, я Вас понял{sex:|а}. Вам нужно обновить данные в мед.карте.
-Для обновления данных необходимо заплатить гос.пошлину, которая зависит от срока карты.
-На 7 дней - #medup7, на 14 дней - #medup14
-На 30 дней #medup30, на 60 дней - #medup60.
-Вы согласны?
-Если согласны, то оплатите и мы продолжим процесс оформления.
-/b Оплатить можно через /pay {myID} или /trade {myID}
+[2]=Игроки 3 и более уровня:
+Хорошо, я Вас понял{sex:|а}
+{sleep:3000}
+Для оформления карты необходимо заплатить гос.пошлину, которая зависит от срока карты.
+{sleep:3000}
+На 7 дней #medup7 | 14 дней #medup14
+{sleep:3000}
+На 30 дней #medup30 | 60 дней #medup60
+{sleep:3000}
+На сколько дней?
+
 
 {dialog}
 [name]=Срок выдачи
 [1]=7 дней
-#timeID=0
+#timeID=0 20000
 [2]=14 дней
-#timeID=1
+#timeID=1 30000
 [3]=30 дней
-#timeID=2
+#timeID=2 40000
 [4]=60 дей
-#timeID=3
+#timeID=3 50000
 {dialogEnd}
 
 Хорошо, тогда приступим к оформлению.
+{sleep:3100}
 /me вытащил{sex:|а} из нагрудного кармана шариковую ручку
+{sleep:3000}
 /do Ручка в правой руке.
+{sleep:3000}
 /me открыл{sex:|а} шкафчик, затем начал{sex:|а} искать мед.карту c индификатором №#playerID
-/me разложил{sex:|а} пальцами правой руки паспорт на нужной страничке и начал переписывать данные в бланк
-/me открыл{sex:|а} пустую мед.карту и паспорт, затем начал переписывать данные из паспорта
+{sleep:3000}
+/me разложил{sex:|а} пальцами правой руки паспорт на нужной страничке и начал{sex:|а} переписывать данные в бланк
+{sleep:3000}
+/me открыл{sex:|а} пустую мед.карту и паспорт, затем начал{sex:|а} переписывать данные из паспорта
+{sleep:3000}
 /do Спустя минуту данные паспорта были переписаны на бланк.
+{sleep:3000}
 {dialogEnd}
 /me отложил{sex:|а} паспорт в сторону его хозяина и приготовил{sex:ся|ась} к продолжению занесения информации
+{sleep:3000}
 Так, сейчас задам несколько вопросов касаемо здоровья...
+{sleep:3000}
 Жалобы на здоровье имеются?
 {pause}
 Имеются ли вредные привычки, а также аллергические реакции?
@@ -986,7 +1010,9 @@ function main()
 Бывают ли у вас бесконтрольные приступы смеха? Если да, то как часто?
 [4]=Ситуация на дороге.
 Представьте, что Вы находитесь в центре дороги и на вас едет с...
+{sleep:3000}
 ...большой скоростью массивное авто.
+{sleep:3000}
 Что вы сделаете?
 [5]=Приступы агрессии.
 Бывают ли у вас бесконтрольные приступы агрессии? Если да, то как часто?
@@ -995,6 +1021,7 @@ function main()
 {dialogEnd}
 {pause}
 /me записал{sex:|а} все сказанное пациентом в мед.карту
+{sleep:3000}
 {dialog}
 [name]=Сост. здоровья
 [1]=Полноcтью здоров(ая)
@@ -1008,12 +1035,17 @@ function main()
 /me сделал{sex:|а} запись напротив пункта 'Псих. Здоровье.' - 'Псих. нездоров.'
 {dialogEnd}
 /me взял{sex:|а} штамп {myHospEn} в правую руку из ящика стола и нанес{sex:|ла} оттиск в углу бланка
+{sleep:3000}
 /do Печать нанесена.
+{sleep:3000}
 /me отложив штамп в сторону и поставил{sex:|а} свою подпись, и сегодняшнюю дату
+{sleep:3000}
 /do Страница мед.карты заполнена.
+{sleep:3000}
 Всё готово, держите свою мед.карту, не болейте.
+{sleep:3000}
 Удачного дня.
-/medcard #playerID #healID #timeID 1000]]  
+/medcard #playerID #healID #timeID]]  
 			local f = io.open(dirml.."/MZHelper/rp-medcard.txt", "w")
 			f:write(textrp) 
 			f:close()
@@ -1468,23 +1500,23 @@ function imgui.OnDrawFrame()
 						end
 					imgui.EndGroup();
 				end
-				imgui.Dummy(imgui.ImVec2(0, 3)) 
-				if imgui.CollapsingHeader(u8"Ценовая политика") then
-					imgui.SetCursorPosX(25);
-					imgui.BeginGroup()
-						imgui.PushItemWidth(100); 
-							if imgui.InputText(u8"Лечение", buf_lec, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-						--	if imgui.InputText(u8"Выдача новой мед.карты", buf_med, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-						--	if imgui.InputText(u8"Обновление мед.карты", buf_upmed, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-							if imgui.InputText(u8"Выдача рецептов", buf_rec, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-						--	if imgui.InputText(u8"Лечение от наркозависимости", buf_narko, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-							if imgui.InputText(u8"Сведение тату", buf_tatu, imgui.InputTextFlags.CharsDecimal) then needSave = true end
-							imgui.Text(u8"Цены на мед.карту выставляются в самой отыгровке мед.карты через переменные в подразделе 'Отыгровки'")
-							imgui.Spacing()
-						imgui.PopItemWidth()
-					imgui.EndGroup();
-					imgui.TextWrapped(u8"Более подробно можете узнать на форуме по пути forum.rodina-rp.com -> Западный округ -> Гос. стурктуры -> Мин.Здрав.")
-				end
+				--imgui.Dummy(imgui.ImVec2(0, 3)) 
+				--if imgui.CollapsingHeader(u8"Ценовая политика") then
+				--	imgui.SetCursorPosX(25);
+				--	imgui.BeginGroup()
+				--		imgui.PushItemWidth(100); 
+				--			if imgui.InputText(u8"Лечение", buf_lec, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--		--	if imgui.InputText(u8"Выдача новой мед.карты", buf_med, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--		--	if imgui.InputText(u8"Обновление мед.карты", buf_upmed, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--			if imgui.InputText(u8"Выдача рецептов", buf_rec, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--		--	if imgui.InputText(u8"Лечение от наркозависимости", buf_narko, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--			if imgui.InputText(u8"Сведение тату", buf_tatu, imgui.InputTextFlags.CharsDecimal) then needSave = true end
+				--			imgui.Text(u8"Цены на мед.карту выставляются в самой отыгровке мед.карты через переменные в подразделе 'Отыгровки'")
+				--			imgui.Spacing()
+				--		imgui.PopItemWidth()
+				--	imgui.EndGroup();
+				--	imgui.TextWrapped(u8"Более подробно можете узнать на форуме по пути forum.rodina-rp.com -> Западный округ -> Гос. стурктуры -> Мин.Здрав.")
+				--end
 				--imgui.Dummy(imgui.ImVec2(0, 3))
 				--if imgui.CollapsingHeader(u8"Загрузка изображений") then
 				--	imgui.TextWrapped(u8"Вы можете отключить большую часть картинок во вкоадках \"Дискорд\", чтобы лишний раз не нагружать игру.")
@@ -1885,7 +1917,7 @@ function imgui.OnDrawFrame()
 					imgui.Bullet(); imgui.SameLine()
 					imgui.TextColoredRGB("{FFB700}Вкладка \"Настройки\"")
 					imgui.TextWrapped(u8"\tБазовые настройки, которые требуется выставить перед началом работы, самые главные которые из них \"Основная информация\".")
-					imgui.TextWrapped(u8"\tЦеновая политика актуальна для сервера Saint Rose, если у Вас сервер другой, пожалуйста измените значения.")
+					--imgui.TextWrapped(u8"\tЦеновая политика актуальна на момент обновления скрипта, если ценовая политика обновлена на форуме, пожалуйста измените значения.")
 					--
 					imgui.Bullet(); imgui.SameLine()
 					imgui.TextColoredRGB("{FFB700}Вкладка \"Шпоры\"")
@@ -1905,7 +1937,7 @@ function imgui.OnDrawFrame()
 					imgui.TextColoredRGB("{FF5F29}/reload {FFFFFF}- команда для перезагрузки скрипта.")
 					imgui.TextColoredRGB("{FF5F29}/rl {FFFFFF}- независимая команда от скрипта, предназначенная для перезагрузки всей папки moonlaoder.")
 					imgui.TextColoredRGB("{FF5F29}/update {FFFFFF}- команда для получения информации об обновлений.")
-					imgui.TextColoredRGB("{FF5F29}/mh-delete {FFFFFF} - удалить скрипт")
+					--imgui.TextColoredRGB("{FF5F29}/mh-delete {FFFFFF} - удалить скрипт")
 					--
 					imgui.Bullet(); imgui.SameLine()
 					imgui.TextColoredRGB("{FFB700}Вкладка \"Дискорд\"")
@@ -1960,7 +1992,7 @@ function imgui.OnDrawFrame()
 						if imgui.Button(u8"Проверить обновление", imgui.ImVec2(160, 20)) then funCMD.updateCheck() end
 						imgui.SameLine()
 						if imgui.Button(u8"Удалить скрипт", imgui.ImVec2(160, 20)) then 
-							addOneOffSound(0, 0, 0, 1058)
+							setAudioStreamState(audio, 1)
 							sampAddChatMessage("", 0xff00ff)
 							sampAddChatMessage("", 0xff00ff)
 							sampAddChatMessage("", 0xff00ff)
@@ -2984,44 +3016,44 @@ function imgui.OnDrawFrame()
 			imgui.SameLine()
 			if imgui.Button(u8"Сбросить", imgui.ImVec2(155, 25)) then
 				local textrp = [[
-// Цены на выдачу новой мед.карты
-#med7=10.000$
-#med14=20.000$
-#med30=32.500$
-#med60=65.000$
-// Цены на обновление мед.карты
-#medup7=15.000$
-#medup14=25.000$
-#medup30=38.000$
-#medup60=70.000$
+// Игроки ДО 3 уровня:
+#med7=5.000
+#med14=10.000
+#med30=20.000
+#med60=30.000
+// Игроки 3 и более уровня:
+#medup7=20.000
+#medup14=30.000
+#medup30=40.000
+#medup60=50.000
 
 {sleep:0}
-Здравствуйте, Вы хотите получить медицинскую карту впервые или обновить существующую?
+Здравствуйте, Вы хотите получить медицинскую карту?
 Предоставьте, пожалуйста, Ваш паспорт
 /b /showpass {myID}
 {pause}
 /todo Благодорю вас!*взяв паспорт в руки и {sex:начал|начала} его изучать.
 {dialog}
 [name]=Выдача мед.карты
-[1]=Новая мед.карта
-Хорошо, я Вас {sex:понял|поняла}. Вам нужно оформить новую мед.карту.
+[1]=Игроки ДО 3 уровня:
+Хорошо, я Вас {sex:понял|поняла}.
 Для оформления карты необходимо заплатить гос.пошлину, которая зависит от срока карты.
 На 7 дней - #med7, на 14 дней - #med14
 На 30 дней #med30, на 60 дней - #med60.
-Вы согласны?
-Если согласны, то оплатите и мы продолжим процесс оформления.
-/b Оплатить можно через /pay {myID} или /trade {myID}
+На сколько дней?
+
+
 
 {dialog}
 [name]=Срок выдачи
 [1]=7 дней
-#timeID=0
+#timeID=0 5000
 [2]=14 дней
-#timeID=1
+#timeID=1 10000
 [3]=30 дней
-#timeID=2
+#timeID=2 20000
 [4]=60 дей
-#timeID=3
+#timeID=3 30000
 {dialogEnd}
 
 Хорошо, тогда приступим к оформлению.
@@ -3032,25 +3064,24 @@ function imgui.OnDrawFrame()
 /me открыл{sex:|а} пустую мед.карту и паспорт, затем начал{sex:|а} переписывать данные из паспорта
 /do Спустя минуту данные паспорта были переписаны на бланк.
 
-[2]=Обновление данных
-Хорошо, я Вас понял{sex:|а}. Вам нужно обновить данные в мед.карте.
-Для обновления данных необходимо заплатить гос.пошлину, которая зависит от срока карты.
+[2]=Игроки 3 и более уровня:
+Хорошо, я Вас понял{sex:|а}
+Для оформления карты необходимо заплатить гос.пошлину, которая зависит от срока карты.
 На 7 дней - #medup7, на 14 дней - #medup14
 На 30 дней #medup30, на 60 дней - #medup60.
-Вы согласны?
-Если согласны, то оплатите и мы продолжим процесс оформления.
-/b Оплатить можно через /pay {myID} или /trade {myID}
+На сколько дней?
+
 
 {dialog}
 [name]=Срок выдачи
 [1]=7 дней
-#timeID=0
+#timeID=0 20000
 [2]=14 дней
-#timeID=1
+#timeID=1 30000
 [3]=30 дней
-#timeID=2
+#timeID=2 40000
 [4]=60 дей
-#timeID=3
+#timeID=3 50000
 {dialogEnd}
 
 Хорошо, тогда приступим к оформлению.
@@ -3761,7 +3792,7 @@ local function playBind(tb)
 		elseif #tb.debug.close > 0 then
 			sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Диалог, начало которого является строка №"..tb.debug.close[#tb.debug.close]..", не закрыт тегом {dialogEnd}", 0xff00ff)
 		end
-		addOneOffSound(0, 0, 0, 1058)
+		setAudioStreamState(audio, 1)
 		return false
 	end
 	function pairsT(t, var)
@@ -3770,7 +3801,9 @@ local function playBind(tb)
 				renderT(line, var)
 			else
 				if line:find("{pause}") then
+					setAudioStreamState(audio, 1)
 					local len = renderGetFontDrawTextLength(font, "{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить")
+					sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на  {23E64A}Enter{FFFFFF} для продолжения.", 0xff00ff)
 					while true do
 						wait(0)
 						if not isGamePaused() then
@@ -3800,6 +3833,7 @@ local function playBind(tb)
 	function renderT(t, var)
 		local render = true
 		local len = renderGetFontDrawTextLength(font, t.name)
+		setAudioStreamState(audio, 1)
 		for i,v in ipairs(t.var) do
 			local str = string.format("{FFFFFF}[{67E56F}%s{FFFFFF}] - %s", v.kn, v.n)
 			if len < renderGetFontDrawTextLength(font, str) then
@@ -4104,7 +4138,7 @@ function funCMD.lec(id)
 				sampSendChat("На что жалуетесь?")
 				wait(1000)
 					sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на  {23E64A}Enter{FFFFFF} для продолжения.", 0xff00ff)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					local len = renderGetFontDrawTextLength(font, "{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить")
 					while true do
 						wait(0)
@@ -4158,7 +4192,7 @@ function funCMD.med(id)
 			sampSendChat("Предоставьте пожалуйста Ваш паспорт для определения требований.")		
 			
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на цифру верхней панели для выбора вида мед.услуги.", 0xff00ff)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				while true do
 					wait(0)
 					renderFontDrawText(font, "Выдача мед.карты: \n{FFFFFF}[{67E56F}1{FFFFFF}] - Выдача новой\n[{67E56F}2{FFFFFF}] - Обновление", sx/5*4, sy-100, 0xFFFFFFFF)
@@ -4180,7 +4214,7 @@ function funCMD.med(id)
 					end
 				end
 			sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на {23E64A}Enter{FFFFFF} для продолжения.", 0xff00ff)
-			addOneOffSound(0, 0, 0, 1058)
+			setAudioStreamState(audio, 1)
 			while true do
 				wait(0)
 				renderFontDrawText(font, "Выдача мед.карты: {8ABCFA}Оплата услуги\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx/5*4, sy-50, 0xFFFFFFFF)
@@ -4218,7 +4252,7 @@ function funCMD.med(id)
 				wait(1750)
 				sampSendChat("Жалобы на здоровье есть?")
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на  {23E64A}Enter{FFFFFF} для продолжения.", 0xff00ff)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				while true do
 					wait(0)
 					renderFontDrawText(font, "Выдача мед.карты: {8ABCFA}Здоровье\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx/5*4, sy-50, 0xFFFFFFFF)
@@ -4238,7 +4272,7 @@ function funCMD.med(id)
 				local idp = math.random(1, 3)
 				sampSendChat(test[idp])
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на цифру верхней панели после ответа пациента.", 0xff00ff)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				local diag = 0
 				local time = 0
 				while true do
@@ -4408,7 +4442,7 @@ end
 --	end
 --	if not isCharInModel(PLAYER_PED, 416) then -- not
 --		sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Чтобы заступить на мобильный пост, Вам необходимо сначала сесть в карету.", 0xff00ff)
---		addOneOffSound(0, 0, 0, 1058)
+--		setAudioStreamState(audio, 1)
 --	else
 --		local bool, post, coord = postGet()
 --		if not bool then
@@ -4434,7 +4468,7 @@ function funCMD.tatu(id)
 				wait(3000)
 				sampSendChat("Покажите Ваш паспорт, пожалуйста.")
 				wait(1000)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Паспорт игрока автоматически закроется, после чего продолжится диалог..", 0xff00ff)
 					repeat wait(0) until sampIsDialogActive()
 					while sampIsDialogActive() do
@@ -4454,7 +4488,7 @@ function funCMD.tatu(id)
 				wait(2000)
 				sampSendChat("/b Покажите татуировки с помощью команды /showtatu")
 					sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на  {23E64A}Enter{FFFFFF} для продолжения или {23E64A}Page Down{FFFFFF}, чтобы закончить диалог.", 0xff00ff)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					local len = renderGetFontDrawTextLength(font, "{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить")
 					while true do
 					wait(0)
@@ -4672,7 +4706,7 @@ function funCMD.osm()
 	end
 		thread = lua_thread.create(function()
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Нажмите на {23E64A}Enter{FFFFFF}, если готовы начать осмотр.", 0xff00ff)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				local len = renderGetFontDrawTextLength(font, "Осмотр: {8ABCFA}Ожидание ответа")
 				while true do
 				wait(0)
@@ -4683,7 +4717,7 @@ function funCMD.osm()
 				wait(2000)
 				sampSendChat("Пожалуйста, предоставьте Вашу мед.карту.")
 				wait(1000)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					while true do
 					wait(0)
 						renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание ответа\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-10, sy-50, 0xFFFFFFFF)
@@ -4700,7 +4734,7 @@ function funCMD.osm()
 				wait(2500)
 				sampSendChat("Давно ли Вы болели? Если да, то какими болезнями.")
 				wait(1000)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					while true do
 					wait(0)
 						renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание ответа\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-10, sy-50, 0xFFFFFFFF)
@@ -4708,7 +4742,7 @@ function funCMD.osm()
 					end
 				sampSendChat("Были ли у Вас травмы?")
 				wait(1000)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				while true do
 				wait(0)
 					renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание ответа\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-10, sy-50, 0xFFFFFFFF)
@@ -4717,7 +4751,7 @@ function funCMD.osm()
 				wait(2000)
 				sampSendChat("Имеются ли какие-то аллергические реакции?")
 				wait(2000)
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				while true do
 				wait(0)
 					renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание ответа\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-10, sy-50, 0xFFFFFFFF)
@@ -4729,7 +4763,7 @@ function funCMD.osm()
 				wait(2000)
 				sampSendChat("/b /me открыл(а) рот")
 				wait(2000)
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					while true do
 					wait(0)
 						renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание ответа\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-10, sy-50, 0xFFFFFFFF)
@@ -4750,7 +4784,7 @@ function funCMD.osm()
 				sampSendChat("/me "..chsex("выключил","выключила").." фонарик и "..chsex("убрал","убрала").." его в карман")
 				wait(2000)
 				sampSendChat("Присядьте, пожалуйста, на корточки и коснитесь кончиком пальца до носа.")
-					addOneOffSound(0, 0, 0, 1058)
+					setAudioStreamState(audio, 1)
 					while true do
 					wait(0)
 						renderFontDrawText(font, "Осмотр: {8ABCFA}Ожидание действия\n{FFFFFF}[{67E56F}Enter{FFFFFF}] - Продолжить", sx-len-15, sy-50, 0xFFFFFFFF)
@@ -4842,7 +4876,7 @@ function funCMD.update()
 		if status == dlstatus.STATUSEX_ENDDOWNLOAD then
 			if updates == nil then 
 				print("{FF0000}Ошибка при попытке скачать файл.") 
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Произошла ошибка при скачивании обновления. Активация резервого источника...", 0xff00ff)
 				
 				updWin.v = false
@@ -4889,7 +4923,7 @@ local erTx =
 		if status == dlstatus.STATUSEX_ENDDOWNLOAD then
 			if updates == nil then 
 				print("{FF0000}Ошибка при попытке скачать файл.") 
-				addOneOffSound(0, 0, 0, 1058)
+				setAudioStreamState(audio, 1)
 				sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: Произошла ошибка при скачивании обновления. Похоже, скачиванию что-то мешает.", 0xff00ff)
 				sampShowDialog(2001, "{FF0000}Ошибка обновления", erTx, "Закрыть", "", 0)
 				setClipboardText("https://github.com/TheMrThor/MedicalHelper/blob/master/MedicalHelper.lua?raw=true")
@@ -5043,7 +5077,7 @@ function hook.onServerMessage(mesColor, mes) -- HOOK
 	if sobes.selID.v ~= "" and sobes.player.name ~= "" then
 		
 		if mes:find(sobes.player.name.."%[%d+%]%sговорит:") then
-		addOneOffSound(0, 0, 0, 1058)
+		setAudioStreamState(audio, 1)
 		local mesLog = mes:match("{B7AFAF}%s(.+)")
 		print(mesLog)
 		local mesLog = stringN(mesLog, "B7AFAF")
@@ -5139,7 +5173,7 @@ end
 --			local bool, post, coord = postGet()
 --			placeWaypoint(coord[list+1].x, coord[list+1].y, 20)
 --			sampAddChatMessage("{FFFFFF}[{ff00ff}MZHelper{FFFFFF}]: На карте была выставлена метка места назначения.", 0xff00ff)
---			addOneOffSound(0, 0, 0, 1058)
+--			setAudioStreamState(audio, 1)
 --		elseif but == 0 then
 --		end
 --	end
