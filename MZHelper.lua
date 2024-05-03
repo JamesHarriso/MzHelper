@@ -1929,7 +1929,6 @@ function imgui.OnDrawFrame()
 					imgui.TextColoredRGB("Разработчик - {FFB700}Дмитрий Цой и Джеймс Харрисон")
 					imgui.Bullet()
 					imgui.TextColoredRGB("Версия скрипта - {FFB700}".. scr.version)
-					imgui.Bullet()
 					--imgui.TextColoredRGB("Благодарность blast.hk за методическую информацию и его пользователям в решении вопросов.")
 						imgui.Dummy(imgui.ImVec2(0, 20))
 						imgui.SetCursorPosX(20)
@@ -2000,8 +1999,8 @@ function imgui.OnDrawFrame()
 				end
 				imgui.TextWrapped(u8"Нажмите 'Download for Windows', если хотите использовать программу на компьютере, или 'Открыть в браузере', если хотите пользоваться Дискордом прямо в браузере, но учтите, что в браузере Вы не сможете говорить по активации на клавишу.")
 				if disSite then
-					imgui.SetCursorPosX(100)
-					imgui.Image(disSite, imgui.ImVec2(462, 212))
+					imgui.SetCursorPosX(30)
+					imgui.Image(disSite, imgui.ImVec2(593, 207))
 				end
 				imgui.Bullet()
 				imgui.TextColoredRGB("{FAB428}Второе.\n\t{FFFFFF}Вам необходимо добавить голосовой канал сервера, на котором Вы находитесь.")
@@ -2017,21 +2016,23 @@ function imgui.OnDrawFrame()
 				imgui.Bullet()
 				imgui.TextColoredRGB("{FAB428}Третье.\n\t{FFFFFF}По истечению 10 минут Вы сможете писать в доступные каналы. Так как Вы являетесь \nсотрудником Больницы, необходимо запросить роль для доступа к голосовому каналу. \nДля этого требуется:")
 
-				imgui.TextColoredRGB("\t1. Нажмите на текстовый канал, указанный левой красной стрелкой. \n\t2. Пропишите команду !role. После ввода команды должно получиться так(Показано правой стрелкой):")
+				imgui.TextColoredRGB("\t1. Нажмите на текстовый канал, указанный левой красной стрелкой. \n\t2. Пропишите команду {FAA158}!role{FFFFFF}. После ввода команды должно получиться так(Показано правой стрелкой):")
 				if disRole then
-					imgui.SetCursorPosX(25)
-					imgui.Image(disRole, imgui.ImVec2(586, 340))
+					imgui.SetCursorPosX(7)
+					imgui.Image(disRole, imgui.ImVec2(637, 372))
 				end
-				imgui.TextColoredRGB("\t4. Попросите в игре сотрудника от 9 ранга и выше, чтобы выдали роль Вам, написав, что Вы\n запросили уже.")
+				imgui.Bullet()
+				imgui.TextColoredRGB("{FAB428}Четвертое.\n\t{FFFFFF}Попросите в игре сотрудника от 9 ранга и выше, чтобы выдали роль Вам, написав, что Вы\n запросили уже.")
 				imgui.TextColoredRGB("После выдачи роли Вам откроются новые каналы. Для этого слева листаете в самый низ. \nНа скриншоте видно, что имеется Текстовый канал, где можно общаться между сотрудниками, \nтакже голосовой, где Вы сможете общаться голосом, но советуем установить активацию микрофона\n по клавише.")
 				if disMed then
-					imgui.SetCursorPosX(25)
-					imgui.Image(disMed, imgui.ImVec2(581, 301))
+					imgui.SetCursorPosX(50)
+					imgui.Image(disMed, imgui.ImVec2(548, 377))
 				end
-				imgui.TextColoredRGB("\t5. Измените себе никнейм. Для этого в канале кликните по себе ПКМ (праквой кнопкой мыши). \nПосле чего выберете пункт {F2D045}'Изменить никнейм'. {FFFFFF}Ник делаем по форме, к примеру Вы сотрудник \nбольницы ЛВ, делаем ник: {B3F637}[LVMC][Ваш ранг] Ник Нейм")
+				imgui.Bullet()
+				imgui.TextColoredRGB("{FAB428}Пятое.\n\t{FFFFFF}Измените себе никнейм. Для этого в канале кликните по себе ПКМ (праквой кнопкой мыши). \nПосле чего выберете пункт {F2D045}'Изменить никнейм'. {FFFFFF}Ник делаем по форме, к примеру Вы сотрудник \nбольницы г. Эдово, делаем ник: {B3F637}[БО][Ваш ранг] Ник Нейм")
 				if disNick then
-					imgui.SetCursorPosX(25)
-					imgui.Image(disNick, imgui.ImVec2(354, 204))
+					imgui.SetCursorPosX(130)
+					imgui.Image(disNick, imgui.ImVec2(387, 270))
 				end
 				imgui.EndChild()
 			end
