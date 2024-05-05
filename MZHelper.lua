@@ -175,8 +175,6 @@ local profbWin = imgui.ImBool(false)
 local select_menu = {true, false, false, false, false, false, false, false, false} -- для переключения меню
 
 
-
-
 local setting = {
 	nick = "",
 	teg = "",
@@ -213,7 +211,7 @@ chgName.inp = imgui.ImBuffer(100)
 chgName.org = {u8"МЗ-А", u8"МЗ-Э"}
 chgName.rank = {u8"Санитар ", u8"Фельдшер", u8"Врач-практикант", u8"Врач-специалист", u8"Терапевт", u8"Нарколог", u8"Хирург", u8"Заведующий отделением", u8"Зам. Главного врача", u8"Главный врач"}
 
-local list_org_BL = {"МЗ-А", "МЗ-Э"} 
+--local list_org_BL = {"МЗ-А", "МЗ-Э"} 
 local list_org	= {u8"МЗ-А", u8"МЗ-Э"}
 local list_org_en = {"Los-Santos Medical Center","San-Fierro Medical Center","Las-Venturas Medical Center"}
 local list_sex	= {fa.ICON_MALE .. u8" Мужской", fa.ICON_FEMALE .. u8" Женский"} --ICON_MALE ICON_FEMALE 
@@ -2473,6 +2471,7 @@ function imgui.OnDrawFrame()
 						sobes.num = sobes.num + 1
 						threadS = lua_thread.create(sobesRP, sobes.num);
 						table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Проверка документов...")
+						----
 						else
 						table.insert(sobes.logChat, "{E74E28}[Ошибка]{FFFFFF}: Проверка уже начала. Если хотите начать новую, нажмите на кнопку \"Остановить\" или \n\tдождитесь окончания проверки.")
 						end
@@ -2501,26 +2500,26 @@ function imgui.OnDrawFrame()
 						else
 							if sobes.player.let >= 3 then
 								imgui.SameLine()
-								imgui.TextColoredRGB("{17E11D}"..sobes.player.let.."/3")
+								imgui.TextColoredRGB("{17E11D}"..sobes.player.let)
 							else
 								imgui.SameLine()
-								imgui.TextColoredRGB("{F55534}"..sobes.player.let.."{17E11D}/3")
+								imgui.TextColoredRGB("{F55534}"..sobes.player.let)
 							end
 						end
-					imgui.Bullet()
-					imgui.Text(u8"Законопослушность:")
-						if sobes.player.zak == 0 then
-							imgui.SameLine()
-							imgui.TextColoredRGB("{F55534}нет")
-						else
-							if sobes.player.zak >= 35 then
-								imgui.SameLine()
-								imgui.TextColoredRGB("{17E11D}"..sobes.player.zak.."/35")
-							else
-								imgui.SameLine()
-								imgui.TextColoredRGB("{F55534}"..sobes.player.zak.."{17E11D}/35")
-							end
-						end
+					--imgui.Bullet()
+					--imgui.Text(u8"Законопослушность:")
+					--	if sobes.player.zak == 0 then
+					--		imgui.SameLine()
+					--		imgui.TextColoredRGB("{F55534}нет")
+					--	else
+					--		if sobes.player.zak >= 35 then
+					--			imgui.SameLine()
+					--			imgui.TextColoredRGB("{17E11D}"..sobes.player.zak.."/35")
+					--		else
+					--			imgui.SameLine()
+					--			imgui.TextColoredRGB("{F55534}"..sobes.player.zak.."{17E11D}/35")
+					--		end
+					--	end
 					imgui.Bullet()
 					imgui.Text(u8"Имеет работу:")
 						if sobes.player.work == "" then
@@ -2536,17 +2535,17 @@ function imgui.OnDrawFrame()
 							end
 						end
 					imgui.Bullet()
-					imgui.Text(u8"Состоит в ЧС:")
-						if sobes.player.bl == "" then
+					imgui.Text(u8"Вод.права:")
+						if sobes.player.lic == nil then
 							imgui.SameLine()
-							imgui.TextColoredRGB("{F55534}нет")
+							imgui.TextColoredRGB("{F55534}Отсутствуют")
 						else
-							if sobes.player.bl == "Не найден(а)" then
+							if sobes.player.lic == "Имеются" then
 								imgui.SameLine()
-								imgui.TextColoredRGB("{17E11D}"..sobes.player.bl)
+								imgui.TextColoredRGB("{17E11D}"..sobes.player.lic)
 							else
 								imgui.SameLine()
-								imgui.TextColoredRGB("{F55534}"..sobes.player.bl)
+								imgui.TextColoredRGB("{F55534}"..sobes.player.lic or "")
 							end
 						end
 					imgui.Spacing()
@@ -2570,12 +2569,12 @@ function imgui.OnDrawFrame()
 							imgui.SameLine()
 							imgui.TextColoredRGB("{F55534}нет")
 						else
-							if sobes.player.narko == 0 then
+							if sobes.player.narko <= 5 then
 								imgui.SameLine()
-								imgui.TextColoredRGB("{17E11D}"..sobes.player.narko.."/0")
+								imgui.TextColoredRGB("{17E11D}"..sobes.player.narko)
 							else
 								imgui.SameLine()
-								imgui.TextColoredRGB("{F55534}"..sobes.player.narko.."{17E11D}/0")
+								imgui.TextColoredRGB("{F55534}"..sobes.player.narko)
 							end
 						end
 				imgui.EndChild()
@@ -2661,7 +2660,7 @@ function imgui.OnDrawFrame()
 							if imgui.MenuItem(u8"Мало лет проживания") then lua_thread.create(sobesRP, 6) end
 							if imgui.MenuItem(u8"Проблемы с законом") then lua_thread.create(sobesRP, 7) end
 							if imgui.MenuItem(u8"Имеет работу") then lua_thread.create(sobesRP, 8) end
-							if imgui.MenuItem(u8"Состоит в ЧС") then lua_thread.create(sobesRP, 9) end
+							--if imgui.MenuItem(u8"Состоит в ЧС") then lua_thread.create(sobesRP, 9) end
 							if imgui.MenuItem(u8"Проблемы со здоровьем") then lua_thread.create(sobesRP, 10) end
 							if imgui.MenuItem(u8"Имеет наркозависимость") then lua_thread.create(sobesRP, 11) end
 						imgui.EndMenu()
@@ -3262,8 +3261,6 @@ function imgui.OnDrawFrame()
 	end
 end
 
-
-
 function readID()
 	if #sobes.logChat ~= 0 then
 		return 16384
@@ -3297,61 +3294,78 @@ function sobesRP(id)
 		sobes.logChat[#sobes.logChat+1] = "{FFC000}Вы: {FFFFFF}Приветствие. Просьба показать документы."
 		sobes.player.name = sampGetPlayerNickname(tonumber(sobes.selID.v))
 		sampSendChat(string.format("Приветствую Вас на собеседование Я, %s - %s", u8:decode(buf_nick.v), u8:decode(chgName.rank[num_rank.v+1])))
-		wait(1700)
-		sampSendChat("Предъявите пожалуйста Ваш пакет документов, а именно: паспорт и мед.карту.")
-		wait(1700)
-		sampSendChat(string.format("/n Отыгрывая RP, команды: /showpass %d; /showmc %d - с использованием /me /do ", myid, myid))
+		wait(3000)
+		sampSendChat("Предъявите пожалуйста Ваш пакет документов, а именно: паспорт, мед.карту и лицензии.")
+		wait(3000)
+		sampSendChat(string.format("/n Отыгрывая RP, команды: /showpass %d; /showmc %d; /showlic %d - с использованием /me /do ", myid, myid,myid))
 		while true do
 			wait(0)
 			if sobes.player.zak ~= 0 and sobes.player.heal ~= "" then break end
 			if sampIsDialogActive() then
+				local function removeColorTags(text)
+					    if text then
+							return text:gsub("{[A-F0-9]+}", "")
+						else
+							return ""
+						end
+				end
 				local dId = sampGetCurrentDialogId()
-				if dId == 1234 then
+				if dId == 0 then
 					local dText = sampGetDialogText()
-					if dText:find("Лет в штате") and dText:find("Законопослушность") then
+					if dText:find("Лет в области:") then
 					HideDialogInTh()
-					if dText:find("Организация") then sobes.player.work = "Работает" else sobes.player.work = "Без работы" end
-						if dText:match("Имя: {FFD700}(%S+)") == sobes.player.name then
-							sobes.player.let = tonumber(dText:match("Лет в штате: {FFD700}(%d+)"))
-							sobes.player.zak = tonumber(dText:match("Законопослушность: {FFD700}(%d+)"))
+					if dText:match("Организация:%s*(%S+)")=="нет" then sobes.player.work = "Без работы" else sobes.player.work = dText:match("Организация:%s*(%S+)") end
+						print(dText)
+						local strlvl = removeColorTags(dText:match("Лет в области:%s*(%S+)"))
+						print(tonumber(strlvl:match("(%d+)")))
+						if removeColorTags(dText:match("Имя:%s*(%S+%s*%S+)")) == sobes.player.name then
+							sobes.player.let = tonumber(strlvl:match("(%d+)"))
+							--sobes.player.zak = tonumber(dText:match("Законопослушность: {FFD700}(%d+)"))
+							wait(3000)
 							sampSendChat("/me "..chsex("посмотрел", "посмотрела").." информацию в паспорте, после чего "..chsex("отдал","отдала").." его человеку напротив")
+							wait(3000)
 							if sobes.player.let >= 3 then
-								if sobes.player.zak >= 35 then
-									if not dText:find("{FF6200} "..list_org_BL[num_org.v+1]) then
-										table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Не имеет проблем.")
-										sobes.player.bl = "Не найден(а)"
-										if sobes.player.narko == 0.1 then
-											sampSendChat("Хорошо, теперь мед.карту.")
-											wait(1700)
-											sampSendChat("/n /showmc "..myid)
-										end
-									else
-										table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Находится в ЧС вашей больницы.")
-											sampSendChat("Извиняюсь, но Вы нам не подходите.")
-											wait(1700)
-											sampSendChat("Вы состоите в Чёрном списке "..u8:decode(chgName.org[num_org.v+1]))
-										sobes.player.bl = list_org_BL[num_org.v+1]
-									--	sobes.getStats = false
-										return
-									end
-								else --player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0},
-									table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Недостаточно законопослушности.")
-										sampSendChat("Извиняюсь, но Вы нам не подходите.")
-										wait(1700)
-										sampSendChat("У Вас проблемы с законом.")
-										wait(1700)
-										sampSendChat("/n Необходимо законопослушнось 35+")
-										wait(1700)
-										sampSendChat("Приходите в следующий раз.")
+								table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Не имеет проблем.")
+								sampSendChat("Хорошо, теперь мед.карту.")
+								wait(3000)
+								sampSendChat("/n /showmc "..myid)
+								--if sobes.player.zak >= 35 then
+								--if not dText:find("{FF6200} "..list_org_BL[num_org.v+1]) then
+								--	table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Не имеет проблем.")
+								--	sobes.player.bl = "Не найден(а)"
+								--	if sobes.player.narko == 0.1 then
+								--		sampSendChat("Хорошо, теперь мед.карту.")
+								--		wait(1700)
+								--		sampSendChat("/n /showmc "..myid)
+								--	end
+								--else
+									--table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Находится в ЧС вашей больницы.")
+									--	sampSendChat("Извиняюсь, но Вы нам не подходите.")
+									--	wait(1700)
+									--	sampSendChat("Вы состоите в Чёрном списке "..u8:decode(chgName.org[num_org.v+1]))
+									--sobes.player.bl = list_org_BL[num_org.v+1]
 								--	sobes.getStats = false
-									return
-								end
+								--	return
+								--end
+								--else --player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0},
+								--	table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Недостаточно законопослушности.")
+								--		sampSendChat("Извиняюсь, но Вы нам не подходите.")
+								--		wait(1700)
+								---		sampSendChat("У Вас проблемы с законом.")
+								--		wait(1700)
+								--		sampSendChat("/n Необходимо законопослушнось 35+")
+								--		wait(1700)
+								--		sampSendChat("Приходите в следующий раз.")
+								--	sobes.getStats = false
+								--	return
+								--end
 							else
 								table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) паспорт. Мало проживает в штате.")
+									wait(3000)
 									sampSendChat("Извиняюсь, но Вы нам не подходите.")
-									wait(1700)
+									wait(3000)
 									sampSendChat("Необходимо как минимум проживать 3 года в штате.")
-									wait(1700)
+									wait(3000)
 									sampSendChat("Приходите в следующий раз.")
 							--	sobes.getStats = false
 								return
@@ -3362,26 +3376,32 @@ function sobesRP(id)
 					end
 					if dText:find("Наркозависимость") then
 						HideDialogInTh()
-						if dText:match("Имя: (%S+)") == sobes.player.name then
+						if dText:match("Имя:%s*(%S+%s*%S+)") == sobes.player.name then
+							wait(3000)
 							sampSendChat("/me "..chsex("посмотрел", "посмотрела").." информацию в мед.карте, после чего "..chsex("отдал","отдала").." его человеку напротив")
 							sobes.player.narko = tonumber(dText:match("Наркозависимость: (%d+)"));
 							if dText:find("Полностью здоровый") then
-								if sobes.player.narko == 0 then
+								if sobes.player.narko <= 5 then
 									table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) мед.карту. Всё в порядке.")
 									sobes.player.heal = "Здоров"
-									if sobes.player.zak == 0 then
-											sampSendChat("Хорошо, теперь паспорт.")
-											wait(1700)
-											sampSendChat("/n /showpass "..myid)
-									end
+									sampSendChat("Хорошо, теперь лицензии.")
+									wait(3000)
+									sampSendChat("/n /showlic "..myid)
+									--if sobes.player.zak == 0 then
+									--		sampSendChat("Хорошо, теперь паспорт.")
+									--		wait(1700)
+									--		sampSendChat("/n /showpass "..myid)
+									--end
+									
 								else
 									table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) мед.карту. Имеет наркозависимость.")
-									sobes.player.heal = "Здоров"
-									if sobes.player.zak == 0 then
-										sampSendChat("Хорошо, Ваш паспорт пожалуйста.")
-										wait(1700)
-										sampSendChat("/n /showpass "..myid)
-									end
+									sobes.player.heal = "Имеет наркозависимость"
+									break
+									--if sobes.player.zak == 0 then
+									--	sampSendChat("Хорошо, Ваш паспорт пожалуйста.")
+									--	wait(1700)
+									--	sampSendChat("/n /showpass "..myid)
+									--end
 									-- sampSendChat("Извиняюсь, но Вы имеете наркозависимость.")
 									-- wait(1700)
 									-- sampSendChat("Вы можете излечиться на месте или прийти в следующий раз.")
@@ -3390,10 +3410,12 @@ function sobesRP(id)
 								end
 							else 
 								table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) мед.карту. Не здоров.")
+								wait(3000)
 								sampSendChat("Извиняюсь, но У Вас проблемы со здоровьем.")
-								wait(1700)
+								wait(3000)
 								sampSendChat("У Вас проблемы со здоровьем. Имеются психическое растройство.")
 								sobes.player.heal = "Имеются отклонения"
+								break
 								--	sobes.getStats = false
 								--	return
 							end
@@ -3401,22 +3423,65 @@ function sobesRP(id)
 							table.insert(sobes.logChat, "{E74E28}[Ошибка]{FFFFFF}: Кто-то другой пытался показать мед.карту.") 
 						end 
 					end
+					if dText:find("Лицензия на авто:") then
+						HideDialogInTh()
+						sobes.player.lic = "Отсутствуют"
+						wait(3000)
+						sampSendChat("/me "..chsex("посмотрел", "посмотрела").." информацию о лицензиях, после чего "..chsex("отдал","отдала").."их человеку напротив")
+						if removeColorTags(dText:match("Лицензия на авто: (%S+)")) == "Есть" then
+							table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) лицензии. Всё в порядке.")
+							sobes.player.lic = "Имеются"
+							break
+							--if sobes.player.narko <= 5 then
+								--table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) лицензии. Всё в порядке.")
+								--sobes.player.heal = "Здоров"
+								--if sobes.player.zak == 0 then
+								--		sampSendChat("Хорошо, теперь паспорт.")
+								--		wait(1700)
+								--		sampSendChat("/n /showpass "..myid)
+								--end
+								--break
+							--else
+								--table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) мед.карту. Имеет наркозависимость.")
+								--sobes.player.heal = "Имеет наркозависимость"
+								--break
+								--if sobes.player.zak == 0 then
+								--	sampSendChat("Хорошо, Ваш паспорт пожалуйста.")
+								--	wait(1700)
+								--	sampSendChat("/n /showpass "..myid)
+								--end
+								-- sampSendChat("Извиняюсь, но Вы имеете наркозависимость.")
+								-- wait(1700)
+								-- sampSendChat("Вы можете излечиться на месте или прийти в следующий раз.")
+								--	sobes.getStats = false
+								--	return
+							--end
+						else 
+							table.insert(sobes.logChat, "{54A8F2}"..sobes.player.name.."{FFFFFF}: Показал(а) лицензии. Отсутствуют вод.права.")
+							wait(3000)
+							sampSendChat("Извиняюсь, но У Вас отсутствуют вод.права.")
+							sobes.player.lic = "Отсутствуют"
+							break
+							--	sobes.getStats = false
+							--	return
+						end
+					end
 				end
 			end
 		end
 		table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Проверка документов закончена.")
-		wait(1700)
+		wait(3000)
 		if sobes.player.work == "Без работы" then
 			sampSendChat("Отлично, у Вас всё в порядке с документами.")
 			sobes.nextQ = true
 			return
 		else
 			sampSendChat("Отлично, у Вас всё в порядке с документами.")
-			wait(2000)
+			wait(3000)
 			sampSendChat("Но Вы работаете на другой государственной работе, требуется оставить форму своему работодателю.")
-			wait(2000)
+			wait(3000)
 			sampSendChat("/n Увольтесь из работы, в который Вы сейчас состоите")
-			wait(2000)
+			wait(3000)
 			sampSendChat("/n Уволиться с помощью команды /out при налчии Titan VIP или попросите в рацию.")
 			sobes.nextQ = true
 			return
@@ -3424,7 +3489,7 @@ function sobesRP(id)
 	end
 	if id == 2 then
 		sampSendChat("Теперь я задам Вам несколько вопросов.")
-		wait(1700)
+		wait(3000)
 		table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Вопрос: С какой целью Вы решили устроиться к нам в Больницу?.")
 		sampSendChat("С какой целью Вы решили устроиться к нам в Больницу?")
 	end
@@ -3434,10 +3499,11 @@ function sobesRP(id)
 	end
 	if id == 4 then
 	table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Принятие игрока...")
+	wait(3000)
 	sampSendChat("Отлично, Вы приняты к нам на работу.")
 	sobes.nextQ = false
 		if num_rank.v+1 <= 8 then
-			wait(1700)
+			wait(3000)
 			sampSendChat("Подойдите, пожалуйста, к Зам.Главного врача или Главному врачу")
 			table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Пригласили игрока в организацию.")
 			sobes.input.v = ""
@@ -3447,17 +3513,17 @@ function sobesRP(id)
 			sobes.nextQ = false
 			sobes.num = 0
 		else
-			wait(1700)
+			wait(3000)
 			sampSendChat("Сейчас я выдам Вам ключи от шкафчика с формой и другими вещами.")
-			wait(1700)
+			wait(3000)
 			sampSendChat("/do В кармане халата находятся ключи отшкафчиков.")
-			wait(1700)
+			wait(3000)
 			sampSendChat("/me потянувшись во внутренний карман халата, "..chsex("достал","достала").." оттуда ключ.")
-			wait(1700)
+			wait(3000)
 			sampSendChat("/me передал".. chsex("", "а") .." ключ от шкафчика №"..sobes.selID.v.." с формой Интерна человеку напротив.")
-			wait(1700)
+			wait(3000)
 			sampSendChat("/invite "..sobes.selID.v)
-			wait(1700)
+			wait(3000)
 			sampSendChat("/r Гражданину с порядковым номером №"..sobes.selID.v.." была выдана форма с ключами и пропуском.")
 			table.insert(sobes.logChat, "{FFC000}Вы: {FFFFFF}Пригласили игрока в организацию.")
 			sobes.input.v = ""
@@ -3469,9 +3535,9 @@ function sobesRP(id)
 		end
 	end
 	if id == 5 then
-		wait(1000)
+		wait(3000)
 		sampSendChat("Извиняюсь, но у Вас отпечатка в паспорте")
-		wait(1700)
+		wait(3000)
 		sampSendChat("/n НонРП ник или другая причина.")
 		sobes.input.v = ""
 		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
@@ -3481,7 +3547,7 @@ function sobesRP(id)
 		sobes.num = 0
 	end
 	if id == 6 then
-		wait(1000)
+		wait(3000)
 		sampSendChat("Извиняюсь, но требуется проживать в штате как минимум 3 года.")
 		sobes.input.v = ""
 		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
@@ -3490,24 +3556,24 @@ function sobesRP(id)
 		sobes.nextQ = false
 		sobes.num = 0
 	end
-	if id == 7 then --sampSendChat("")
-		wait(1000)
-		sampSendChat("Извиняюсь, но у Вас проблемы с законом.")
-		wait(1700)
-		sampSendChat("/n Требуется минимум 35 законопослушности.")
-		sobes.input.v = ""
-		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
-		sobes.selID.v = ""
-		sobes.logChat = {}
-		sobes.nextQ = false
-		sobes.num = 0
-	end
+	--if id == 7 then --sampSendChat("")
+	--	wait(3000)
+	--	sampSendChat("Извиняюсь, но у Вас проблемы с законом.")
+	--	wait(3000)
+	--	sampSendChat("/n Требуется минимум 35 законопослушности.")
+	--	sobes.input.v = ""
+	--	sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
+	--	sobes.selID.v = ""
+	--	sobes.logChat = {}
+	--	sobes.nextQ = false
+	--	sobes.num = 0
+	--end
 	if id == 8 then
-		wait(1000)
+		wait(3000)
 		sampSendChat("Извиняюсь, Вы работаете на другой государственной работе.")
-		wait(1700)
+		wait(3000)
 		sampSendChat("/n Увольтесь из работы, в который Вы сейчас состоите")
-		wait(1700)
+		wait(3000)
 		sampSendChat("/n Уволиться с помощью команды /out при налчии Titan VIP или попросите в рацию.")
 		sobes.input.v = ""
 		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
@@ -3516,20 +3582,20 @@ function sobesRP(id)
 		sobes.nextQ = false
 		sobes.num = 0
 	end
-	if id == 9 then
-		wait(1000)
-		sampSendChat("Извиняюсь, но Вы состоите в Черном Списке нашей больнице.")
-		wait(1700)
-		sampSendChat("/n Для вынесения из ЧС требуется оставить заявку на форуме в разделе Мин.Здрав.")
-		sobes.input.v = ""
-		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
-		sobes.selID.v = ""
-		sobes.logChat = {}
-		sobes.nextQ = false
-		sobes.num = 0
-	end
+	--if id == 9 then
+	--	wait(1000)
+	--	sampSendChat("Извиняюсь, но Вы состоите в Черном Списке нашей больнице.")
+	--	wait(1700)
+	--	sampSendChat("/n Для вынесения из ЧС требуется оставить заявку на форуме в разделе Мин.Здрав.")
+	--	sobes.input.v = ""
+	--	sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
+	---	sobes.selID.v = ""
+	--	sobes.logChat = {}
+	--	sobes.nextQ = false
+	--	sobes.num = 0
+	--end
 	if id == 10 then
-		wait(1000)
+		wait(3000)
 		sampSendChat("Извиняюсь, но у Вас проблемы со здоровьем.")
 		sobes.input.v = ""
 		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
@@ -3539,10 +3605,10 @@ function sobesRP(id)
 		sobes.num = 0
 	end
 	if id == 11 then
-		wait(1000)
+		wait(3000)
 		sampSendChat("Извиняюсь, но у Вас имеется наркозависимость.")
-		wait(1700)
-		sampSendChat("Для лечения этого можете купить таблетку в магазине или вылечиться у нас.")
+		wait(3000)
+		sampSendChat("Для лечения этого можете взять рецепт у нас и купить таблетку в магазине")
 		sobes.input.v = ""
 		sobes.player = {name = "", let = 0, zak = 0, work = "", bl = "", heal = "", narko = 0.1}
 		sobes.selID.v = ""
